@@ -20,7 +20,7 @@ cd LiftReg
 conda create -n liftreg python=3.7
 pip install -r requirements.txt
 ```
-To run the code with pretrained model, set the dataset folder in [here]. Then run the following command:
+To run the code with pretrained model, set the dataset folder in [here]. Download the pretrained model from [here]. Then run the following command:
 ```
 cd LiftReg
 python eval.py -s ./exps/disp_subspace/2022_02_17_20_12_57/cur_task_setting.json -g [GPU_id]
