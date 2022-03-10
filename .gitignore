@@ -1,0 +1,9 @@
+/temp
+/.vscode
+.ipynb_checkpoints
+/__pycache__
+/sample.egg-info
+*.pyc
+build
+dist
+*.code-workspace
