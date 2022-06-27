@@ -3,8 +3,8 @@
 This is the official repository for
 
 **LiftReg: Limited Angle 2D/3D Deformable Registration.** \
-Lin Tian, Yueh Z. Lee, Ra\'ul San Jos\'e Est\'epar, Marc Niethammer
-<!-- [Paper](https://drive.google.com/file/d/1-gORB0x9qa8hDpnpLSISXGmb9I6j9SG9/edit) -->
+[Lin Tian](https://www.cs.unc.edu/~lintian/), Yueh Z. Lee, Ra\'ul San Jos\'e Est\'epar, Marc Niethammer\
+MICCAI 2022. [Paper](https://arxiv.org/abs/2203.05565)
 
 In this work we propose LiftReg, a 2D/3D deformable registration approach. LiftReg is a deep registration framework 
 which is trained using sets of digitally reconstructed radiographs (DRR) and computed tomography (CT) image pairs. By using simulated training data, LiftReg can use a high-quality CT-CT image similarity measure, which helps the network to learn a high-quality deformation space. To further improve registration quality and to address the inherent depth ambiguities of very limited angle acquisitions, we propose to use features extracted from the backprojected 2D images and a statistical deformation model. We test our approach on the DirLab lung registration dataset and show that it outperforms an existing learning-based pairwise registration approach. 
