@@ -1,0 +1,94 @@
+{
+    "dataset": {
+        "apply_hu_clip": true,
+        "data_path": "",
+        "dataset_class": "dataset.Registration2D3DDataset.Registration2D3DDataset",
+        "drr_folder_name": "degree_30_num_4",
+        "img_after_resize": [
+            160,
+            160,
+            160
+        ],
+        "load_projection_interval": 1,
+        "load_training_data_into_memory": true,
+        "max_num_for_loading": [
+            100,
+            20,
+            10,
+            10
+        ],
+        "spacing_to_refer": [
+            2.2,
+            2.2,
+            2.2
+        ],
+        "use_segmentation_map": true
+    },
+    "train": {
+        "check_best_model_frequency": 1,
+        "dataloader": {
+            "batch_size": 30,
+            "shuffle": [
+                true,
+                true,
+                false,
+                false
+            ],
+            "workers": [
+                4,
+                4,
+                0,
+                0
+            ]
+        },
+        "debug_on": true,
+        "epoch": 300,
+        "gpu_ids": 0,
+        "loss": {
+            "initial_reg_factor": 0.01,
+            "min_reg_factor": 0.01,
+            "reg_factor_decay_from": 2,
+            "sim_class": "layers.losses.NCCLoss"
+        },
+        "loss_class": "losses.SubspaceLoss.loss",
+        "mode": "train",
+        "model": {
+            "drr_feature_num": 4,
+            "latent_dim": 56,
+            "pca_path": "[Path to the folder contain basis files (pca_vectors.npy and pca_mean.npy).]"
+        },
+        "model_class": "models.LiftRegDeformSubspaceBackproj.model",
+        "network_class": "networks.RegistrationNet.RegistrationNet",
+        "optim": {
+            "adam": {
+                "beta": [
+                    0.9,
+                    0.999
+                ],
+                "weight_decay": 0
+            },
+            "lr": 0.001,
+            "lr_scheduler": {
+                "custom": {
+                    "gamma": 0.8,
+                    "step_size": 30
+                },
+                "plateau": {
+                    "cooldown": 2,
+                    "factor": 0.7,
+                    "min_lr": 1e-08,
+                    "patience": 2,
+                    "threshold": 0.0001
+                },
+                "type": "custom"
+            },
+            "optim_type": "adam"
+        },
+        "save_3d_img": false,
+        "save_extra_3d_img": false,
+        "save_fig": true,
+        "save_fig_frequency": 20,
+        "save_model_frequency": 30,
+        "val_frequency": 10
+    }
+}
