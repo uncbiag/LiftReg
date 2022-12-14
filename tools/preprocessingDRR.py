@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 from utils.general import make_dir
 from utils.sdct_projection_utils import (
     calculate_projection_wraper, calculate_projection_wraper_with_geo_csv_file, calc_relative_atten_coef)
-from tools.extract_ROI_from_syn_projection import extract_ROI_from_image_in_batch
 
 parser = argparse.ArgumentParser(description="Generating DRR for dataset")
 parser.add_argument('--data_path', required=True, type=str,
@@ -43,6 +42,8 @@ def plot_drr(source, target, source_proj, target_proj, source_roi, target_roi, s
     num_per_drr_plot = int(source_proj.shape[0]/4)
     if source_roi is not None:
         fig, axes = plt.subplots(6, 4)
+        axes[4, 0].set_ylabel("Source roi")
+        axes[5, 0].set_ylabel("Target roi")
     else:
         fig, axes = plt.subplots(4, 4)
     for i in range(4):
@@ -57,8 +58,7 @@ def plot_drr(source, target, source_proj, target_proj, source_roi, target_roi, s
     axes[1, 0].set_ylabel("Target")
     axes[2, 0].set_ylabel("Source proj")
     axes[3, 0].set_ylabel("Target proj")
-    axes[4, 0].set_ylabel("Source roi")
-    axes[5, 0].set_ylabel("Target roi")
+
     plt.savefig(save_path)
     plt.clf()
     plt.close()
@@ -146,20 +146,12 @@ if __name__ == "__main__":
                 source_proj, poses = calculate_projection_wraper_with_geo_csv_file(calc_relative_atten_coef(source), (2.2, 2.2, 2.2), geo_path, receptor_size=receptor_size)
                 target_proj, _ = calculate_projection_wraper_with_geo_csv_file(calc_relative_atten_coef(target), (2.2, 2.2, 2.2), geo_path, receptor_size=receptor_size)
 
-            # Extract roi
-            source_roi, source_bbox = extract_ROI_from_image_in_batch(source_proj)
-            target_roi, target_bbox = extract_ROI_from_image_in_batch(target_proj)
-
             # Save files
             np.save(os.path.join(drr_folder, f"{d}_target_proj.npy"), target_proj)
             np.save(os.path.join(drr_folder, f"{d}_source_proj.npy"), source_proj)
-            np.save(os.path.join(roi_folder, f"{d}_target_proj_roi.npy"), target_roi)
-            np.save(os.path.join(roi_folder, f"{d}_source_proj_roi.npy"), source_roi)
-            np.save(os.path.join(roi_folder, f"{d}_target_proj_roi_bbox.npy"), target_bbox)
-            np.save(os.path.join(roi_folder, f"{d}_source_proj_roi_bbox.npy"), source_bbox)
 
             # Plot drr
             if args.preview:
-                plot_drr(source, target, source_proj, target_proj, source_proj*source_roi, target_proj*target_roi, os.path.join(log_path, f"{d}_preview.png"))
+                plot_drr(source, target, source_proj, target_proj, None, None, os.path.join(log_path, f"{d}_preview.png"))
 
     np.save(os.path.join(drr_folder, "poses.npy"), poses)
