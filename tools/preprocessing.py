@@ -74,11 +74,15 @@ Data_Info = {
             "file_type": FILE_TYPE.copd,
             "idx_file_name": "data_id"
         },
-        {
-            "data_list_path":"/playpen-raid1/lin.tian/data/raw/4DCT",
-            "file_type": FILE_TYPE.dct,
-            "idx_file_name": "dct_data_id"
-        },
+        #### We were using high resolution of the DIRLAB COPDGene images from COPDGene Study for evaluation in the paper.
+        #### If you do not have the access to the high resolution version, you can use the low
+        #### resolution version obtained from DIRLAB.
+        #### If low resolution is used, comment out the following part.
+        # {
+        #     "data_list_path": "/playpen-raid1/lin.tian/data/raw/DIRLABCasesHighRes",
+        #     "file_type": FILE_TYPE.copd_highres,
+        #     "idx_file_name": "data_id"
+        # }
     ]
     }
 
