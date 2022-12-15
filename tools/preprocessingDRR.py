@@ -5,8 +5,8 @@ import os
 import numpy as np
 import torch
 import matplotlib.pyplot as plt
-from utils.general import make_dir
-from utils.sdct_projection_utils import (
+from liftreg.utils.general import make_dir
+from liftreg.utils.sdct_projection_utils import (
     calculate_projection_wraper, calculate_projection_wraper_with_geo_csv_file, calc_relative_atten_coef)
 
 parser = argparse.ArgumentParser(description="Generating DRR for dataset")
@@ -101,9 +101,6 @@ if __name__ == "__main__":
     
     drr_folder = os.path.join(drr_root_folder, "drr")
     make_dir(drr_folder)
-
-    roi_folder = os.path.join(drr_root_folder, "roi")
-    make_dir(roi_folder)
 
     # Do we need to plot the drr?
     if args.preview:

@@ -1,9 +1,9 @@
 {
     "dataset": {
         "apply_hu_clip": true,
-        "data_path": "",
-        "dataset_class": "dataset.Registration2D3DDataset.Registration2D3DDataset",
-        "drr_folder_name": "degree_30_num_4",
+        "data_path": "[DATA_PATH]",
+        "dataset_class": "liftreg.dataset.Registration2D3DDataset.Registration2D3DDataset",
+        "drr_folder_name": "[DRR_FOLDER_NAME]",
         "img_after_resize": [
             160,
             160,
@@ -48,17 +48,17 @@
             "initial_reg_factor": 0.01,
             "min_reg_factor": 0.01,
             "reg_factor_decay_from": 2,
-            "sim_class": "layers.losses.NCCLoss"
+            "sim_class": "liftreg.layers.losses.NCCLoss"
         },
-        "loss_class": "losses.SubspaceLoss.loss",
-        "mode": "train",
+        "loss_class": "liftreg.losses.SubspaceLoss.loss",
+        "mode": "test",
         "model": {
             "drr_feature_num": 4,
             "latent_dim": 56,
             "pca_path": "[Path to the folder contain basis files (pca_vectors.npy and pca_mean.npy).]"
         },
-        "model_class": "models.LiftRegDeformSubspaceBackproj.model",
-        "network_class": "networks.RegistrationNet.RegistrationNet",
+        "model_class": "liftreg.models.LiftRegDeformSubspaceBackproj.model",
+        "network_class": "liftreg.networks.RegistrationNet.RegistrationNet",
         "optim": {
             "adam": {
                 "beta": [
@@ -84,6 +84,7 @@
             },
             "optim_type": "adam"
         },
+        "output_path": "[PATH_TO_FOLDER_STORING_CHECKPOINTS_AND_SETTING_JSON]",
         "save_3d_img": false,
         "save_extra_3d_img": false,
         "save_fig": true,

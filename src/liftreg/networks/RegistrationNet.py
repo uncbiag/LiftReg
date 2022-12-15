@@ -4,18 +4,18 @@ from time import time
 
 import numpy as np
 import torch
-from layers.losses import NCCLoss
+from ..layers.losses import NCCLoss
 from mermaid.utils import compute_warped_image_multiNC
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
-from utils.general import get_class, make_dir
-from utils.metrics import get_multi_metric
-from utils.net_utils import resume_train, save_model
-from utils.utils import compute_jacobi_map, save_deformations, save_fig_3D
-from utils.visualize_registration_results import show_current_images
+from ..utils.general import get_class, make_dir
+from ..utils.metrics import get_multi_metric
+from ..utils.net_utils import resume_train, save_model
+from ..utils.utils import compute_jacobi_map, save_deformations, save_fig_3D
+from ..utils.visualize_registration_results import show_current_images
 
-from networks.NetworkBase import NetworkBase
+from .NetworkBase import NetworkBase
 
 
 class RegistrationNet(NetworkBase):

@@ -1,0 +1,7 @@
+README.md
+setup.cfg
+setup.py
+src/liftreg.egg-info/PKG-INFO
+src/liftreg.egg-info/SOURCES.txt
+src/liftreg.egg-info/dependency_links.txt
+src/liftreg.egg-info/top_level.txt

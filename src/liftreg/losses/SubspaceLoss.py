@@ -2,8 +2,8 @@ import mermaid.finite_differences as fdt
 import numpy as np
 import torch
 import torch.nn as nn
-from utils.utils import sigmoid_decay
-from utils.general import get_class
+from ..utils.utils import sigmoid_decay
+from ..utils.general import get_class
 
 
 class loss(nn.Module):

@@ -6,9 +6,9 @@ import numpy as np
 import pandas as pd
 import torch
 import torch.nn.functional as F
-import utils.module_parameters as pars
-from utils.metrics import get_multi_metric
-from utils.net_utils import Bilinear
+import liftreg.utils.module_parameters as pars
+from liftreg.utils.metrics import get_multi_metric
+from liftreg.utils.net_utils import Bilinear
 
 from tools.preprocessing import COPD_spacing
 

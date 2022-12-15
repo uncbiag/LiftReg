@@ -47,6 +47,7 @@ class Registration2D3DDataset(Dataset):
         self.apply_hu_clip = option['apply_hu_clip', False]
 
         self.get_file_list()
+        print(self.name_list)
         self.reg_option = option
         load_training_data_into_memory = option[('load_training_data_into_memory',False,"when train network, load all training sample into memory can relieve disk burden")]
         self.load_into_memory = load_training_data_into_memory if phase == 'train' else False

@@ -3,10 +3,10 @@ import os
 
 import torch
 
-import utils.module_parameters as pars
+import liftreg.utils.module_parameters as pars
 from tools.evaluate_dir_lab import eval_copd_highres
-from utils.general import get_class
-from utils.utils import set_seed_for_demo
+from liftreg.utils.general import get_class
+from liftreg.utils.utils import set_seed_for_demo
 
 if __name__ == '__main__':
     """
