@@ -1,6 +1,6 @@
 from __future__ import print_function
 from __future__ import absolute_import
-from utils.general import make_dir
+from ..utils.general import make_dir
 
 
 """
@@ -13,8 +13,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-import utils.utils as utils
-import utils.viewers as viewers
+import liftreg.utils.viewers as viewers
+import liftreg.utils.utils as utils
 
 dpi=500
 extension= '.png'

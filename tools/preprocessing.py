@@ -7,7 +7,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
 import SimpleITK as sitk
-from utils.medical_image_utils import load_IMG, resample, seg_bg_mask, seg_lung_mask
+from liftreg.utils.medical_image_utils import load_IMG, resample, seg_bg_mask, seg_lung_mask
 
 parser = argparse.ArgumentParser(description="Prepare data for training")
 parser.add_argument('-o','--output_path', required=True, type=str,
@@ -72,7 +72,7 @@ Data_Info = {
         {
             "data_list_path":"/playpen-raid1/lin.tian/data/raw/copd",
             "file_type": FILE_TYPE.copd,
-            "idx_file_name": "copd_data_id"
+            "idx_file_name": "data_id"
         },
         {
             "data_list_path":"/playpen-raid1/lin.tian/data/raw/4DCT",

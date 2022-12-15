@@ -1,10 +1,9 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from layers.layers import convBlock, FullyConnectBlock, GaussianSmoothing
-from utils.net_utils import Bilinear, gen_identity_map
+from ..layers.layers import convBlock, FullyConnectBlock
+from ..utils.net_utils import Bilinear, gen_identity_map
 import numpy as np
-from utils.sdct_projection_utils import backproj_grids_with_poses
 
 
 class model(nn.Module):
@@ -21,7 +20,6 @@ class model(nn.Module):
         self.input_channel = 2
         self.output_channel = 3
         self.img_sz = img_sz
-        self.gaussian_smooth = GaussianSmoothing(4, 8, 2, dim=2)
 
         # Init flow net
         self.encoders = nn.ModuleList()
@@ -43,7 +41,6 @@ class model(nn.Module):
         self.pca_mean = torch.from_numpy(np.load(f"{opt['pca_path']}/pca_mean.npy")).float().cuda()
 
         self.id_transform = gen_identity_map(self.img_sz, 1.0)
-        self.backward_proj_grids = None
 
 
     def forward(self, input):
@@ -61,36 +58,11 @@ class model(nn.Module):
             target_cp = target
         
         B,_,D,W,H = moving.shape
-        target_poses = input['target_poses']
 
-        coefs, disp_field = self._estimate_flow(moving, target_proj, target_poses)
-        
-        deform_field = disp_field + self.id_transform
-        warped_source = self.bilinear(moving_cp, deform_field)
-
-        model_output = {"warped": warped_source,
-                        "phi": deform_field,
-                        "params": disp_field,
-                        "target": target_cp,
-                        "pca_coefs": coefs,
-                        "target_proj":target_proj,
-                        "warped_proj":target_proj}
-        return model_output
-    
-    def _estimate_flow(self, moving, target_proj, poses):
-        batch_size, proj_num, proj_w, proj_h = target_proj.shape
-        w, d, h = moving.shape[2:]
-        B,_,D,W,H = moving.shape
-
-        if self.backward_proj_grids is None:
-            with torch.no_grad():
-                self.backward_proj_grids = backproj_grids_with_poses(poses[0:1].cpu().numpy(), moving.shape[2:], target_proj.shape[2:], device=moving.device).permute(0,1,3,4,5,2)
-
-        target_volume = F.grid_sample(
-                target_proj.reshape(batch_size*proj_num, 1, proj_w, proj_h), 
-                self.backward_proj_grids.expand(batch_size, -1, -1, -1, -1, -1).reshape(batch_size*proj_num, w*d, h, -1),
-                align_corners=True,
-                padding_mode="zeros").reshape(batch_size, proj_num, w, d, h).detach()
+        # Lift 2D to 3D
+        target_reshape = F.interpolate(target_proj, 
+                                       size=[moving.shape[2], moving.shape[4]])
+        target_volume = target_reshape.unsqueeze(3).expand(-1, -1, -1, moving.shape[3], -1)
 
         x = torch.cat([moving,
                          target_volume],
@@ -100,8 +72,15 @@ class model(nn.Module):
             x = self.encoders[i](x)
         
         disp_field = F.linear(x, self.pca_vectors, self.pca_mean).reshape(B, 3, D, W, H)
+        deform_field = disp_field + self.id_transform
+        warped_source = self.bilinear(moving_cp, deform_field)
 
-        return x, disp_field
+        model_output = {"warped": warped_source,
+                        "phi": deform_field,
+                        "params": disp_field,
+                        "target": target_cp,
+                        "pca_coefs": x}
+        return model_output
 
     def get_extra_to_plot(self):
         return None, None

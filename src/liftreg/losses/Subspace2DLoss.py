@@ -2,8 +2,8 @@ import mermaid.finite_differences as fdt
 import numpy as np
 import torch
 import torch.nn as nn
-from utils.general import get_class
-from utils.utils import sigmoid_decay
+from ..utils.utils import sigmoid_decay
+from ..utils.general import get_class
 
 
 class loss(nn.Module):
@@ -19,18 +19,16 @@ class loss(nn.Module):
 
     def forward(self, input):
         # Parse input data
-        source_proj = input["source_proj"]
-        target_proj = input["target_proj"]
-        warped_proj = input["warped_proj"]
-        warped_proj_inv = input["warped_proj_inv"]
-
+        warped = input["warped_proj"]
+        target = input["target_proj"]
         params = input["params"]
+        pca_coefs = input["pca_coefs"]
         epoch = input["epoch"]
 
-
-        sim_loss = self.sim(warped_proj, target_proj) + self.sim(source_proj, warped_proj_inv)
-        reg_loss = self.compute_reg_loss(params[0]) + self.compute_reg_loss(params[1])
-        total_loss = self.sim_factor * sim_loss + self.get_reg_factor(epoch) * reg_loss
+        sim_loss = self.sim(warped, target)/warped.shape[0]
+        reg_loss = self.compute_reg_loss(params)
+        total_loss = self.sim_factor * sim_loss  + self.get_reg_factor(epoch) * reg_loss
+        # total_loss = self.get_reg_factor(epoch) * reg_loss
         outputs = {
             "total_loss": total_loss,
             "sim_loss": sim_loss.item(),
@@ -64,5 +62,6 @@ class loss(nn.Module):
             fd.dYc(disp[:, 2, ...])**2 +\
             fd.dZc(disp[:, 2, ...])**2
 
-        reg = torch.mean(l2, dim=[1,2,3]).sum()
+
+        reg = torch.mean(l2)
         return reg
