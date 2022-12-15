@@ -10,7 +10,10 @@ In this work we propose LiftReg, a 2D/3D deformable registration approach. LiftR
 which is trained using sets of digitally reconstructed radiographs (DRR) and computed tomography (CT) image pairs. By using simulated training data, LiftReg can use a high-quality CT-CT image similarity measure, which helps the network to learn a high-quality deformation space. To further improve registration quality and to address the inherent depth ambiguities of very limited angle acquisitions, we propose to use features extracted from the backprojected 2D images and a statistical deformation model. We test our approach on the DirLab lung registration dataset and show that it outperforms an existing learning-based pairwise registration approach. 
 ![Model Structure](/readme_materials/NetworkDiagram.png)
 
-
+**This repository is under active maintenance.** Here is the todo list:
+- [ ] Improve the process to replicate the result
+- [ ] Upload subspace basis to cloud drive
+- [ ] Upload model weights to cloud drive
 
 
 ## Setup environment
@@ -18,6 +21,14 @@ which is trained using sets of digitally reconstructed radiographs (DRR) and com
 cd LiftReg
 conda create -n liftreg python=3.7
 pip install -r requirements.txt
+pip install -e .
+```
+
+## Generating DRRs
+The process to generate the testing data is to run the following two commands:
+```
+python tools/preprocessing.py -o [PATH_TO_OUTPUT_FOLDER] -d [DATASET_NAME_OF_YOUR_CHOICE] --data_type val
+python tools/preprocessingDRR.py --data_path [PATH_TO_OUTPUT_FOLDER]/[DATASET_NAME_OF_YOUR_CHOICE] --drr_folder_name [DRR_FOLDER_OF_YOUR_CHOICE] -g 0
 ```
 
 ## Train with built subspace
@@ -35,7 +46,9 @@ If the model is trained following the commands in the previous section, skip ste
 ### Step 1. Set the paths in cur_task_setting.json
 To run the code with pretrained model, set the following paths in cur_task_setting.json:
 1. ["dataset"]["data_path"]
-2. ["train"]["output_path"]
+2. ["dataset"]["drr_folder_name"]
+3. ["train"]["model"]["pca_path"]
+4. ["train"]["output_path"]
 
 ### Step 2. Run evaluation script
 Run the following command:
