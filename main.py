@@ -6,9 +6,9 @@ from stat import S_IREAD
 
 import torch
 
-import utils.module_parameters as pars
-from utils.general import get_class, get_git_revisions_hash, make_dir
-from utils.utils import set_seed_for_demo
+import liftreg.utils.module_parameters as pars
+from liftreg.utils.general import get_class, get_git_revisions_hash, make_dir
+from liftreg.utils.utils import set_seed_for_demo
 
 
 def prepare(args):

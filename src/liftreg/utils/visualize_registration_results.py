@@ -517,7 +517,6 @@ def show_current_images(iter, iS, iT, iW,iSL=None, iTL=None, iWL=None, vizImages
     if visual_param is not None:
         if visual_param['save_fig'] == True:
             save_fig_num = min(visual_param['save_fig_num'], len(visual_param['pair_name']))
-            print("num {} of pair would be saved in {}".format(save_fig_num,visual_param['save_fig_path']))
         else:
             save_fig_num = 1
     else:

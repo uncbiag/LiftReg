@@ -38,35 +38,31 @@ class NetworkBase(ABC):
         set the model in train mode (only for learning methods)
         :return:
         """
-        self.model.train(True)
+        self.model.train()
         self.is_train = True
-        torch.set_grad_enabled(True)
     
     def set_val(self):
         """
         set the model in validation mode (only for learning methods)
         :return:
         """
-        self.model.train(False)
+        self.model.eval()
         self.is_train = False
-        torch.set_grad_enabled(False)
 
     def set_debug(self):
         """
         set the model in debug (subset of training set) mode (only for learning methods)
         :return:
         """
-        self.model.train(False)
+        self.model.eval()
         self.is_train = False
-        torch.set_grad_enabled(False)
 
     def set_test(self):
         """
         set the model in test mode ( only for learning methods)
         :return:
         """
-        self.model.train(False)
+        self.model.eval()
         self.is_train = False
-        torch.set_grad_enabled(False)
 
     

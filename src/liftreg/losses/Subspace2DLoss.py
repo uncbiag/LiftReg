@@ -25,7 +25,7 @@ class loss(nn.Module):
         pca_coefs = input["pca_coefs"]
         epoch = input["epoch"]
 
-        sim_loss = self.sim(warped, target)/warped.shape[0]
+        sim_loss = self.sim(warped, target)
         reg_loss = self.compute_reg_loss(params)
         total_loss = self.sim_factor * sim_loss  + self.get_reg_factor(epoch) * reg_loss
         # total_loss = self.get_reg_factor(epoch) * reg_loss

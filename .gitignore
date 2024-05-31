@@ -7,3 +7,5 @@
 build
 dist
 *.code-workspace
+evaluation_results
+temp_dataset
