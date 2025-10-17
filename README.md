@@ -33,7 +33,7 @@ python tools/preprocessingDRR.py --data_path [PATH_TO_OUTPUT_FOLDER]/[DATASET_NA
 ```
 
 ## Pre-built subspace and model weights
-You can download the pre-built subspace and the weights for the registration network at [Google Drive](https://drive.google.com/drive/folders/1QUv6Za8R98NQGo9QYe9tPfMZZWQrJPPZ?usp=sharing)
+You can download the pre-built subspace and the weights for the registration network at [Google Drive](https://drive.google.com/drive/folders/18z_3thecLuyNUzzd4H3q-OEVAzoVpoAa?usp=sharing)
 
 
 ## Evaluate with the trained model
